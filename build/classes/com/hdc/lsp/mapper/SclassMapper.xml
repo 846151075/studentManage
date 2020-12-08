@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hdc.lsp.mapper.SclassMapper">	
+	<resultMap type="Sclass" id="SclassResult">
+		<id property="sId" column="s_id"/>
+    	<result property="sName" column="s_name"/>
+    	<result property="sNum" column="s_num"/>    	
+    	<collection property="users" column="s_id" javaType="List" select="getUsersBySclass"/>
+	</resultMap>
+	<select id="selectUsersBySclass" parameterType="Sclass" resultMap="SclassResult">
+		 select s_id,s_name,s_num  from sclass
+		<where>					
+			<if test="sId != null and sId != '' ">and s_id = #{sId}</if>
+			<if test="sName != null and sName != '' "> and s_name like concat('%',#{sName},'%')</if>			
+		</where>
+	</select>
+	<select id="getUsersBySclass" parameterType="int" resultType="User">
+		select Id as id,username from user where s_id = #{id} 
+	</select>
+</mapper>
