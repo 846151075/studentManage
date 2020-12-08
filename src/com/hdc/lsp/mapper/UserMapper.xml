@@ -4,19 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hdc.lsp.mapper.UserMapper">
-	
-     <resultMap type="User" id="UserResult">
+
+
+   <!--  <resultMap type="User" id="UserResult">
     	<id property="id" column="Id"/>
     	<result property="username" column="username"/>
     	<result property="password" column="password"/>    	 
-    </resultMap>
-    <!--<resultMap type="User" id="UserResult">
+    </resultMap>-->
+    <resultMap type="User" id="UserResult">
     	<id property="id" column="Id"/>
     	<result property="username" column="username"/>
     	<result property="password" column="password"/>
     	<association property="sclass" column="s_id" javaType="Sclass" select="getSclassByUser"/>
     	<collection property="courses" column="Id" javaType="List" select="getCoursesByUser"/>
-    </resultMap>-->
+    </resultMap>
     <select id="getUser" resultMap="UserResult" parameterType="user">
         select * from user 
         <where>
@@ -50,5 +51,16 @@
     		<if test="id!=null and id != '' ">and u.Id = #{id}</if>
     		<if test="username!=null and username != '' ">and u.username like concat('%',#{username},'%')</if>
     	</where>
-    </select>    
+    </select>
+
+
+
+    <select id="getSclassByUser" parameterType="int" resultType="Sclass">
+    select s_id as sId, s_name as sName,s_num as sNum from sclass WHERE s_id = #{id}
+    </select>
+    <select id="getCoursesByUser" parameterType="long"  resultType="Course">
+    select c_name as cName from stu_course sc LEFT JOIN course c on sc.course_id = c.c_id where sc.user_id = #{id}
+    </select>
+
+
 </mapper>
