@@ -5,18 +5,18 @@
 
 <mapper namespace="com.hdc.lsp.mapper.UserMapper">
 	
-    <!-- <resultMap type="User" id="UserResult">
+     <resultMap type="User" id="UserResult">
     	<id property="id" column="Id"/>
     	<result property="username" column="username"/>
     	<result property="password" column="password"/>    	 
-    </resultMap>    -->
-    <resultMap type="User" id="UserResult">
+    </resultMap>
+    <!--<resultMap type="User" id="UserResult">
     	<id property="id" column="Id"/>
     	<result property="username" column="username"/>
     	<result property="password" column="password"/>
     	<association property="sclass" column="s_id" javaType="Sclass" select="getSclassByUser"/>
     	<collection property="courses" column="Id" javaType="List" select="getCoursesByUser"/>
-    </resultMap>
+    </resultMap>-->
     <select id="getUser" resultMap="UserResult" parameterType="user">
         select * from user 
         <where>
